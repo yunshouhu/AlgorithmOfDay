@@ -98,13 +98,13 @@ public class OneSort {
             public int compare(Rectangle o1, Rectangle o2) {
                 int ret=0;
                 ret=o1.getId()-o2.getId();
-                if(o1.getId()==o2.getId())
+                if(ret==0)
                 {
                     ret=o1.getLength()-o2.getLength();
-                    if(o1.getLength()==o2.getLength())
+                    if(ret==0)
                     {
                         ret=o1.getWith()-o2.getWith();
-                        if(o1.getWith()==o2.getWith())
+                        if(ret==0)
                         {
                             delList.add(o1);
                         }
