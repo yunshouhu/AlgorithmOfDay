@@ -1,0 +1,8 @@
+*.exe
+*.vcxproj
+*.filters
+*.iml
+/java/.idea/
+/java/target
+
+
