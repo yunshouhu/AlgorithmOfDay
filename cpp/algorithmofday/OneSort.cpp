@@ -12,14 +12,18 @@ struct Rectangle
 	int id;
 	int length;
 	int with;
+	//唯一标识符
+	int no;
 };
 
 //注意传递的是引用 否则会在内存中拷贝新值
 void doJob(vector<Rectangle> &list);
-bool SortByM1(const Rectangle &o1, const Rectangle &o2);
+int SortByM1(const Rectangle &o1, const Rectangle &o2);
+vector<Rectangle> delList;
 
-static vector<Rectangle> delList;
 
+ //http://acm.nyist.net/JudgeOnline/problem.php?pid=8
+//提交后Accepted
 int main()
 {
 
@@ -30,6 +34,7 @@ int main()
 		cin >> m;//m个长方形
 
 		vector<Rectangle> list;
+		int no = 0;
 		while (m > 0)
 		{
 			int id;
@@ -40,6 +45,8 @@ int main()
 			cin >> b;
 
 			Rectangle rectangle;
+			no++;
+			rectangle.no = no;
 			rectangle.id = id;
 			if (a > b)
 			{
@@ -60,7 +67,7 @@ int main()
 	}
 }
 
-bool SortByM1(const Rectangle &o1,const Rectangle &o2)
+int SortByM1(const Rectangle &o1,const Rectangle &o2)
 {
 	int ret = 0;
 	ret = o1.id - o2.id;
@@ -76,46 +83,29 @@ bool SortByM1(const Rectangle &o1,const Rectangle &o2)
 			}
 		}
 	}
-	if(ret!=0)
-	{
-		return false;
-	}else
-	{
-		return true;
-	}
+	return ret;
 }
 
-//2.8快速排序
-int Partition(vector<Rectangle> &a, int p, int r)
-{
-	int i = p, j = r + 1;
-	Rectangle x = a.at(p);
-	while (true)
+void bubble_sort(vector<Rectangle> &myList, int n)
+{ 
+
+	int i, j;
+	Rectangle t;
+	bool change;
+	for (i = n - 1, change = true; i > 1 && change; --i)
 	{
-		//while (a[++i] < x);
-		while (SortByM1(a.at(++i), x)==true);
-		//while (a[--j] > x);
-		while (SortByM1(a.at(--j), x)==false);
-		if (i >= j)
-			break;
-		//Swap(a[i], a[j]);
-		Rectangle x = a.at(i);
-		a.assign(i, a.at(j));
-		a.assign(j, x);
-
-	}
-	a[p] = a[j];
-	a[j] = x;
-	return j;
-}
-
-
-void QuickSort(vector<Rectangle> &a, int p, int r)
-{
-	if (p < r) {
-		int q = Partition(a, p, r);
-		QuickSort(a, p, q - 1);
-		QuickSort(a, q + 1, r);
+		change = false;
+		for (j = 0; j<i; ++j)
+		{
+			if(SortByM1(myList.at(j),myList.at(j+1))>0)
+			{
+				t = myList.at(j);
+				myList[j]=myList.at(j + 1);
+				myList[j + 1]= t;
+				change = true;
+			}
+		}
+			
 	}
 }
 
@@ -124,25 +114,40 @@ void doJob(vector<Rectangle> &mylist) {
 
 	vector<Rectangle>::iterator it;
 	
-	//std::sort(mylist.begin(), mylist.end(), SortByM1);
+	//std::sort(mylist.begin(), mylist.end(), SortByM1); //存在问题
 
-	QuickSort(mylist, 0, mylist.size());
+	bubble_sort(mylist, mylist.size());//只能自己定义冒泡排序
 
-	for (it = delList.begin(); it != delList.end(); it++)
+	vector<Rectangle>::iterator itor2;
+	for (it = mylist.begin(); it != mylist.end();)
 	{
-		mylist.erase(it);
-
+		itor2 = it;
+		//判断是否删除
+		vector<Rectangle>::iterator it_del;
+		bool isDel = false;
+		for (it_del = delList.begin(); it_del != delList.end();)
+		{
+			if(it_del->no == it->no)
+			{
+				isDel = true;
+				break;
+			}
+			it_del++;
+		}
+		if(isDel==true)
+		{
+			it = mylist.erase(itor2);//erase这个api 存在太多问题了
+		}
+		if(it!= mylist.end())
+		{
+			++it;
+		}
+		
 	}
+
 	for (it = mylist.begin(); it != mylist.end(); it++)
 	{
 		cout << it->id << " " << it->length << " " << it->with << endl;
 	
 	}
-	/**
-	unsigned int i = 0;
-	for (; i < mylist.size();i++)
-	{
-		Rectangle rectangle = mylist[i];
-		cout << rectangle.id << " " << rectangle.length << " " << rectangle.with << endl;;
-	}*/
 }
