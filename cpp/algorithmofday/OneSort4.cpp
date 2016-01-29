@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <functional>
 #include <vector>
@@ -10,7 +11,9 @@ struct Rectangle
 	int id;
 	int length;
 	int width;
+
 	bool operator==(const Rectangle &s) const {
+
 		return id==s.id && length==s.length && width ==s.width;
 
 	}
@@ -39,15 +42,9 @@ int main()
 
 			Rectangle rectangle;
 			rectangle.id = id;
-			if (a > b)
-			{
-				rectangle.length = (a);
-				rectangle.width = (b);
-			}
-			else {
-				rectangle.length = (b);
-				rectangle.width = (a);
-			}
+			rectangle.length = max(a, b);
+			rectangle.width = min(a, b);
+
 			list.push_back(rectangle);
 			m--;
 		}
@@ -97,22 +94,22 @@ void bubble_sort(vector<Rectangle> &myList, int n)
 
 
 void doJob(vector<Rectangle> &mylist) {
-	vector<Rectangle>::iterator it;
+	
 	bubble_sort(mylist, mylist.size());
 	unsigned int i = 0;
 	for (; i< delList.size();i++)
 	{
+		vector<Rectangle>::iterator it;
 		it = std::find(mylist.begin(), mylist.end(), delList[i]);
 		//¥Ê‘⁄Œ Ã‚
 		if(it!= mylist.end())
 		{
 			it=mylist.erase(it);
-			//it++;
 		}
 	}
+	vector<Rectangle>::iterator it;
 	for (it = mylist.begin(); it != mylist.end(); it++)	
 	{
-		cout << it->id << " " << it->length << " " << it->width << endl;
-			
+		cout << it->id<<" "<< it->length <<" "<< it->width << endl;			
 	}
 }
