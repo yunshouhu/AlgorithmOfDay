@@ -1,36 +1,56 @@
-//#include <vld.h>
-#include<iostream>
-#include<vector>
-#include<set>
-using namespace std;
+#define _CRT_SECURE_NO_DEPRECATE
+#include<stdio.h>
+#include<math.h>
+int sushu(int n);
+int main()
+{
+	int n, m, i;
+	scanf("%d", &n);
+	while (n--)
+	{
+		scanf("%d", &m);
+		if (sushu(m) == 1)
+		{
+			printf("%d 0\n", m); continue;
+		}
 
-int main() {
-	int numGroup;
-	cin >> numGroup;
-	set<vector<int> > sec;
-	int num = 0, length = 0, width = 0;
-
-	for (int iGroup = 0; iGroup < numGroup; ++iGroup) {
-		int numInGroup;
-		cin >> numInGroup;
-		for (int jInGroup = 0; jInGroup < numInGroup; ++jInGroup) {
-			cin >> num >> length >> width;
-			if (length < width) {
-				int tmp = width;
-				width = length;
-				length = tmp;
+		else
+		{
+			for (i = 1; m - i > -1; i++)
+			{
+				if (sushu(m - i) == 1)
+				{
+					printf("%d %d\n", m - i, i); break;
+				}
+				if (sushu(m + i) == 1)
+				{
+					printf("%d %d\n", m + i, i); break;
+				}
 			}
-			vector<int> vec;
-			vec.push_back(num);
-			vec.push_back(length);
-			vec.push_back(width);
-			sec.insert(vec);
-
 		}
 	}
-	for (set<vector<int> >::const_iterator first = sec.begin(), end = sec.end(); first != end; ++first)
-		cout << (*first)[0] << ' ' << (*first)[1] << ' ' << (*first)[2] <<endl;
-	sec.clear();
 
 	return 0;
+}
+int sushu(int n)
+{
+	int leap = 1;
+	int i, m, t;
+	t = sqrt(n);
+	if (n == 2)
+		leap = 1;
+	else if (n > 2)
+	{
+		for (i = 2; i <= t; i++)
+		{
+			if (n%i == 0)
+			{
+				leap = 0;
+				break;
+			}
+		}
+	}
+	else
+		leap = 0;
+	return leap;
 }
