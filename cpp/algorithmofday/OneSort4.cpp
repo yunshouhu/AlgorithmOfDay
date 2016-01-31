@@ -101,7 +101,7 @@ void doJob(vector<Rectangle> &mylist) {
 	{
 		vector<Rectangle>::iterator it;
 		it = std::find(mylist.begin(), mylist.end(), delList[i]);
-		//存在问题
+		//感觉这里存在问题
 		if(it!= mylist.end())
 		{
 			it=mylist.erase(it);
