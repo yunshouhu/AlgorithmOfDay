@@ -1,3 +1,4 @@
+package com.yws.algorithmofday;
 
 import java.util.*;
 
@@ -7,7 +8,7 @@ import java.util.*;
  *  提交oj时 把包名去掉 类名改为Main
  *  http://ac.jobdu.com/faqs.php
  */
-public class Main {
+public class ZOJ {
 
     public static void main(String[] args) {
         Scanner cin = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class Main {
             }
             doJob(word);
         }
-       // System.out.println();
+        // System.out.println();
         cin.close();
     }
 
