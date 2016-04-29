@@ -3,119 +3,44 @@ import java.util.*;
 
 /**
  * Created by wjh on 2016/2/23.
- *  oj题目 http://ac.jobdu.com/problem.php?pid=1032
+ *  oj题目 http://ac.jobdu.com/problem.php?pid=198
  *  提交oj时 把包名去掉 类名改为Main
  *  http://ac.jobdu.com/faqs.php
  */
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner cin = new Scanner(System.in);
-
-        String word;
-        while (cin.hasNext()) {
-            word=cin.next();
-            if(word.equals("E"))
-            {
-                break;
-            }
-            doJob(word);
+        private static Map<Integer,Character> map=new HashMap<Integer, Character>();
+        static {
+            map.put(0,'O');
+            map.put(1,'O');
+            map.put(2,'T');
+            map.put(3,'T');
+            map.put(4,'F');
+            map.put(5,'F');
+            map.put(6,'S');
+            map.put(7,'S');
+            map.put(8,'E');
+            map.put(9,'N');
         }
-       // System.out.println();
-        cin.close();
+        public static void main(String[] args) {
+            Scanner cin = new Scanner(System.in);
+            int count;
+            count=cin.nextInt();
+            while (count>0) {
+                String word=cin.next();
+                doJob(word);
+                count--;
+            }
+            cin.close();
+        }
+
+        private static void doJob(String word) {
+            char datas[]=word.toCharArray();
+            for(int i=datas.length-1;i>=0;i--)
+            {
+                int key=Integer.parseInt(String.valueOf(datas[i]));
+                System.out.print(map.get(key));
+            }
+            System.out.println();
+        }
     }
-
-    private static void doJob(String word) {
-        char[] chs=word.toCharArray();
-        int count_Z=0;
-        int count_O=0;
-        int count_J=0;
-        for (Character ch:chs)
-        {
-            if(ch.equals('Z'))
-            {
-                count_Z++;
-            }
-            if(ch.equals('O'))
-            {
-                count_O++;
-            }
-            if(ch.equals('J'))
-            {
-                count_J++;
-            }
-        }
-        while(count_Z>0 || count_O>0 || count_J>0)
-        {
-            if(count_Z>0)
-            {
-                System.out.print('Z');
-                count_Z--;
-            }
-            if(count_O>0)
-            {
-                System.out.print('O');
-                count_O--;
-            }
-            if(count_J>0)
-            {
-                System.out.print("J");
-                count_J--;
-            }
-        }
-        System.out.println();
-    }
-
-    private static void doJob2(String word) {
-        char[] chs=word.toCharArray();
-        Map<Character,Integer> maps=new HashMap<Character, Integer>();
-        for (char ch:chs)
-        {
-            if(!maps.containsKey(ch))
-            {
-                maps.put(ch,1);
-            }else{
-                int count=maps.get(ch);
-                count++;
-                maps.put(ch,count);
-            }
-        }
-        int count_Z=0;
-        if(maps.containsKey('Z'))
-        {
-            count_Z= maps.get('Z');
-        }
-
-
-        int count_O=0;
-        if(maps.containsKey('O'))
-        {
-            count_O= maps.get('O');
-        }
-        int count_J=0;
-        if(maps.containsKey('J'))
-        {
-            count_J= maps.get('J');
-        }
-        while(count_Z>0 || count_O>0 || count_J>0)
-        {
-            if(count_Z>0)
-            {
-                System.out.print('Z');
-                count_Z--;
-            }
-            if(count_O>0)
-            {
-                System.out.print('O');
-                count_O--;
-            }
-            if(count_J>0)
-            {
-                System.out.print("J");
-                count_J--;
-            }
-        }
-        System.out.println();
-
-    }
-}
